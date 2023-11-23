@@ -213,20 +213,160 @@ POST {4} -> responce 201 | DB: [{1}, {2}, {3}, {4}, {4}, {4}, {4}]
 //   const ENDPOINT = "question";
 //   return axios.post(`${URL}/${ENDPOINT}`, data).then(({ data }) => data);
 // }
+// **************************************************************************************
 
+// const URL = 'https://jsonplaceholder.typicode.com/posts';
 
-const URL = "https://jsonplaceholder.typicode.com/posts";
+// const newPost = {
+//   userId: 101,
+//   title: 'My new Post',
+//   body: 'lsdkjfkdlsjfsdlkfj lskdjflskdjfsdlkfj lskdjfldksfj',
+// };
 
-const newPost = {
-  userId: 101,
-  title: "My new Post",
-  body: "lsdkjfkdlsjfsdlkfj lskdjflskdjfsdlkfj lskdjfldksfj",
-};
+// const updatedPost1 = {
+//   userId: 101,
+//   title: 'My new Post updated',
+// };
 
-fetch(URL, {
-  method: 'POST',
-  body: JSON.stringify(newPost),
-  headers: {
-    "Content-Type": "application/json",
-  }
-});
+// const updatedPost2 = {
+//   userId: 101,
+//   title: 'My new Post updated',
+//   text: 'fffffffffffffff',
+// };
+
+// **************************************************************
+//              POST - Write
+// **********************************************************
+// fetch(URL, {
+//   method: 'POST',
+//   body: JSON.stringify(newPost),
+//   headers: {
+//     "Content-Type": "application/json",
+//   }
+// });
+
+// axios.post(URL, newPost);
+
+// **********************************************************
+//             GET - Read
+// **********************************************************
+// fetch(URL).then(resp => {
+//   if (!resp.ok) {
+//     throw new Error(resp.statusText)
+//   }
+//   return resp.json()
+// }).then((data => console.log(data)))
+//   .then((err => console.log(err)));
+
+// -------------------------------------------
+
+// axios.get(URL)
+//    .then((data => console.log(data)))
+//   .then((err => console.log(err)));;
+
+// *******************************************
+//           PATCH -Update
+// ******************************************
+
+// fetch(`${URL}/${1}`, {
+//   method: 'PATCH',
+//   body: JSON.stringify(updatedPost1),
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// })
+//   .then(resp => {
+//     if (!resp.ok) {
+//       throw new Error(resp.statusText);
+//     }
+//     return resp.json();
+//   })
+//   .then(data => console.log(data))
+//   .catch(err => console.error(err));
+
+// ------------------------------------
+// axios
+//   .patch(`${URL}/${1}`, updatedPost1)
+//   .then(data => console.log(data))
+//   .catch(err => console.log(err));
+
+// *******************************************
+//           PUT -Update
+// ******************************************
+// fetch(`${URL}/${1}`, {
+//   method: 'PUT',
+//   body: JSON.stringify(updatedPost2),
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// })
+//   .then(resp => {
+//     if (!resp.ok) {
+//       throw new Error(resp.statusText);
+//     }
+//     return resp.json();
+//   })
+//   .then(data => console.log(data))
+//   .catch(err => console.error(err));
+
+// ------------------------------------
+// axios
+//   .put(`${URL}/${1}`, updatedPost2)
+//   .then(data => console.log(data))
+//   .catch(err => console.log(err));
+
+// ***********************************************
+//           Delete
+// *********************************************
+// fetch(`${URL}/${1}`, {
+//   method: 'DELETE',
+//    })
+//   .then(resp => {
+//     if (!resp.ok) {
+//       throw new Error(resp.statusText);
+//     }
+//     return resp.json();
+//   })
+//   .then(data => console.log(data))
+//   .catch(err => console.error(err));
+
+// --------------------------------------
+// axios.delete(`${URL}/${1}`);
+// ********************************************************
+// ******************************************************
+//                   ПРАКТИКА
+// ***************************************************
+const form = document.querySelector('.js-question');
+
+form.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  // Далі збираємо дані: (витягуємо елементи форми за допомогой elements:
+  // name = "userName", name="phone", name="email", name="question" iз HTML)
+  const { userName, phone, email, question } = event.currentTarget.elements;
+
+  const userData = {
+    name: userName.value,
+    phone: phone.value,
+    email: email.value,
+    comment: question.value,
+  };
+  //            Зібрали дані
+  // ----------------------------------------
+  //            Послали запит
+  console.log(userData);
+  createQuestionService(userData)
+    .then(data => {
+      console.log(data);
+      alert('Thank you!');
+    })
+    .catch(err => console.error(err))
+    .finally(() => form.reset());
+}
+
+function createQuestionService(data) {
+  const URL = 'http://127.0.0.1:3000/api';
+  const ENDPOINT = 'question';
+  return axios.post(`${URL}/${ENDPOINT}`, data).then(({ data }) => data);
+}
