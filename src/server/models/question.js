@@ -20,4 +20,6 @@ const questionSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Data', questionSchema)
+module.exports = mongoose.model('Data', questionSchema);
+
+

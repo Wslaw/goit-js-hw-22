@@ -370,3 +370,7 @@ function createQuestionService(data) {
   const ENDPOINT = 'question';
   return axios.post(`${URL}/${ENDPOINT}`, data).then(({ data }) => data);
 }
+// *******************************
+//  Отримання данних у файлі question.js
+// -------------------------------
+
